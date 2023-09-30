@@ -9,7 +9,7 @@ const customer =
 
 function saveJson(data:any){
     const jsonString = JSON.stringify(data);
-fs.writeFile("./src/app/api/posts.json", jsonString, (err) => {
+fs.writeFile("./src/app/api/posts.json", jsonString, (err:any) => {
   if (err) {
     console.log("Error writing file", err);
   } else {
@@ -24,7 +24,7 @@ type Post = {
   id: string;
   title: string;
   desc: string;
-  date: Date;
+  date: any;
 };
 
 let posts: Post[] = file;
