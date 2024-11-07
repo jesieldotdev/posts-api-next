@@ -8,8 +8,13 @@ export const GET = async (req: Request) => {
         
         return NextResponse.json({ message: 'OK', posts }, { status: 200 });
     } catch (err) {
-        return NextResponse.json({ message: 'Error', err: err.message }, { status: 500 });
+        if (err instanceof Error) {
+            return NextResponse.json({ message: 'Error', err: err.message }, { status: 500 });
+        } else {
+            return NextResponse.json({ message: 'Unknown error' }, { status: 500 });
+        }
     }
+    
 }
 
 export const POST = async (req: Request) => {
@@ -20,6 +25,11 @@ export const POST = async (req: Request) => {
         await addPost(post); // Garantir que a função addPost aguarde a inserção do post
         return NextResponse.json({ message: "Ok", post }, { status: 201 });
     } catch (err) {
-        return NextResponse.json({ message: 'Error', err: err.message }, { status: 500 });
+        if (err instanceof Error) {
+            return NextResponse.json({ message: 'Error', err: err.message }, { status: 500 });
+        } else {
+            return NextResponse.json({ message: 'Unknown error' }, { status: 500 });
+        }
     }
+    
 }
