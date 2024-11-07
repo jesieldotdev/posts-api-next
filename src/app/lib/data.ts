@@ -1,56 +1,66 @@
-import file from "../api/posts.json" assert { type: "json" };
-const fs = require("fs");
-const customer = 
-  {
-    name: "d Co.",
-    order_count: 0,
-    address: "Po Box City",
-  }
+import supabase  from '../../config/database'; // Importando o cliente Supabase
 
-function saveJson(data:any){
-    const jsonString = JSON.stringify(data);
-fs.writeFile("./src/app/api/posts.json", jsonString, (err:any) => {
-  if (err) {
-    console.log("Error writing file", err);
-  } else {
-    console.log("Successfully wrote file");
-  }
-});
-}
+// Obter todos os posts
+export const getPosts = async () => {
+  const { data, error } = await supabase
+    .from('posts') // Nome da tabela
+    .select('*');  // Seleciona todos os campos
 
+    console.log(data)
 
-
-type Post = {
-  id: string;
-  title: string;
-  desc: string;
-  date: any;
+  if (error) throw new Error(error.message);
+  return data;
 };
 
-let posts: Post[] = file;
+// Adicionar um novo post
+export const addPost = async (post: {  title: string;  }) => {
+  const { data, error } = await supabase
+    .from('posts') // Nome da tabela
+    .insert([
+      {title: post.title }
+    ]);
 
-export const getPosts = () => posts;
-export const addPost = (post: Post) => {
-  posts.push(post);
-  saveJson(posts)
+  if (error) throw new Error(error.message);
+  return data;
 };
-export const deletePost = (id: string) => {
-  posts = posts.filter((post) => post.id !== id);
-  saveJson(posts)
-};
-export const updatePost = (id: string, title: string, desc: string) => {
-  const post = posts.find((post) => post.id === id);
-  
 
-  if (post) {
-    post.title = title;
-    post.desc = desc;
-    saveJson(posts)
-  } else {
+// Deletar um post pelo id
+export const deletePost = async (id: string) => {
+  const { data, error } = await supabase
+    .from('posts')
+    .delete()
+    .eq('id', id); // A condição de deletar pelo id
+
+  if (error) throw new Error(error.message);
+  if (!data) {
     throw new Error("NO POST FOUND");
   }
+  
+  
+  return data;
 };
 
-export const getById = (id: string) => {
-  return posts.find((post) => post.id === id);
+// Atualizar um post pelo id
+export const updatePost = async (id: string, title: string, desc: string) => {
+  const { data, error } = await supabase
+    .from('posts')
+    .update({ title, desc })
+    .eq('id', id); // A condição de atualizar pelo id
+
+  if (error) throw new Error(error.message);
+  if (!data) throw new Error("NO POST FOUND");
+  return data;
+};
+
+// Obter um post pelo id
+export const getById = async (id: string) => {
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('id', id)
+    .single(); // Para pegar apenas um resultado (usamos .single() para retornar um único item)
+
+  if (error) throw new Error(error.message);
+  if (!data) throw new Error("NO POST FOUND");
+  return data;
 };

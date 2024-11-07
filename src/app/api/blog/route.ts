@@ -1,36 +1,35 @@
 import { getPosts, addPost, deletePost } from "@/app/lib/data"
 import { NextResponse } from "next/server"
 
-
-export const GET = async (req: Request, res: Response) => {
-
-    try{
-        const posts = getPosts()
+export const GET = async (req: Request) => {
+    try {
+        // Aguarda a resolução da promessa
+        const posts = await getPosts(); 
         
-        return NextResponse.json({message: 'OK', posts},{
-            status: 200
-        })
+        return NextResponse.json({ message: 'OK', posts }, { status: 200 });
     } catch (err) {
-        return NextResponse.json({message: 'Error', err}, {
-            status: 500,
-        })
+        if (err instanceof Error) {
+            return NextResponse.json({ message: 'Error', err: err.message }, { status: 500 });
+        } else {
+            return NextResponse.json({ message: 'Unknown error' }, { status: 500 });
+        }
     }
+    
 }
 
-export const POST = async (req: Request, res: Response) => {
-    const {title, desc} = await req.json()
+export const POST = async (req: Request) => {
+    const { title } = await req.json();
 
     try {
-        const post = {title, desc, date: new Date(), id: Date.now().toString()}
-        addPost(post)
-        return NextResponse.json({message: "Ok", post}, {status: 201})
-    } catch (err){
-        return NextResponse.json({message: 'Error', err}, {
-            status: 500
-        })
+        const post = { title };
+        await addPost(post); // Garantir que a função addPost aguarde a inserção do post
+        return NextResponse.json({ message: "Ok", post }, { status: 201 });
+    } catch (err) {
+        if (err instanceof Error) {
+            return NextResponse.json({ message: 'Error', err: err.message }, { status: 500 });
+        } else {
+            return NextResponse.json({ message: 'Unknown error' }, { status: 500 });
+        }
     }
+    
 }
-
-
-
-
