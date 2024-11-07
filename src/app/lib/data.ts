@@ -1,4 +1,4 @@
-import { supabase } from '../../config/database'; // Importando o cliente Supabase
+import supabase  from '../../config/database'; // Importando o cliente Supabase
 
 // Obter todos os posts
 export const getPosts = async () => {
