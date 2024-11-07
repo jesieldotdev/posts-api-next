@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.46.1",
     "next": "latest",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",

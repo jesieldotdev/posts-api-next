@@ -1,11 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import sequelize from "./config/database";
-import "./models/Post"; // Garanta que o modelo Post foi importado
-
-sequelize.sync({ force: false }).then(() => {
-  console.log("Database synchronized");
-});
+import sequelize from "../config/database";
 
 const inter = Inter({ subsets: ['latin'] })
 

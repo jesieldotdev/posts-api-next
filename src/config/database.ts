@@ -1,15 +1,7 @@
-const { Sequelize } = require('sequelize');
+import { createClient } from '@supabase/supabase-js';
 
-const sequelize = new Sequelize('database', 'username', 'password', {
-  host: 'localhost',
-  dialect: 'postgres',
-});
+// Substitua pelos valores reais da sua instância Supabase
+const SUPABASE_URL = process.env.SUPABASE_URL; // URL da sua instância do Supabase
+const SUPABASE_ANON_KEY = process.env.SUPABASE_KEY; // Chave pública anônima (encontrada no painel do Supabase)
 
-(async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-})();
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
