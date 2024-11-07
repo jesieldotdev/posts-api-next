@@ -32,7 +32,11 @@ export const deletePost = async (id: string) => {
     .eq('id', id); // A condição de deletar pelo id
 
   if (error) throw new Error(error.message);
-  if (data.length === 0) throw new Error("NO POST FOUND");
+  if (!data) {
+    throw new Error("NO POST FOUND");
+  }
+  
+  
   return data;
 };
 
@@ -44,7 +48,7 @@ export const updatePost = async (id: string, title: string, desc: string) => {
     .eq('id', id); // A condição de atualizar pelo id
 
   if (error) throw new Error(error.message);
-  if (data.length === 0) throw new Error("NO POST FOUND");
+  if (!data) throw new Error("NO POST FOUND");
   return data;
 };
 
