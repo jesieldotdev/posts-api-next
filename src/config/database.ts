@@ -5,4 +5,4 @@ const SUPABASE_URL = process.env.SUPABASE_URL; // URL da sua instância do Supab
 const SUPABASE_ANON_KEY = process.env.SUPABASE_KEY; // Chave pública anônima (encontrada no painel do Supabase)
 
  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
- export default supabase
+ export default supabase    
