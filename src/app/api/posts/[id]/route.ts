@@ -1,10 +1,10 @@
-import { deletePost, getById, updatePost } from "@/app/lib/data";
+import { deletePost, getPostById, updatePost } from "@/app/lib/posts_controller";
 import { NextResponse } from "next/server";
 
 export const GET = async (req: Request) => {
   try {
-    const id = req.url.split("blog/")[1];
-    const post = getById(id);
+    const id = req.url.split("posts/")[1];
+    const post = await getPostById(id);
     console.log(post);
     if (!post) {
       return NextResponse.json({ message: "Error" }, { status: 404 });
@@ -18,9 +18,9 @@ export const GET = async (req: Request) => {
 
 export const PUT = async (req: Request) => {
   try {
-    const { title, desc } = await req.json();
-    const id = req.url.split("blog/")[1];
-    updatePost(id, title, desc);
+    const { title, slug, author_id} = await req.json();
+    const id = req.url.split("posts/")[1];
+    updatePost(id, title, slug, author_id);
     return NextResponse.json({ message: "OK" }, { status: 200 });
   } catch (err) {
     return NextResponse.json({message: 'Error'}, {status: 500})
@@ -29,9 +29,9 @@ export const PUT = async (req: Request) => {
 
 export const DELETE = async (req: Request) => {
   try {
-    const id = req.url.split("blog/")[1];
+    const id = req.url.split("posts/")[1];
 
-    const post = getById(id);
+    const post = getPostById(id);
 
     if (!post) {
       return NextResponse.json({ message: "Error" }, { status: 404 });

@@ -1,12 +1,12 @@
-import { getPosts, addPost, deletePost } from "@/app/lib/data"
+import { getUsers, addUser, deleteUser } from "@/app/lib/users_controller"
 import { NextResponse } from "next/server"
 
 export const GET = async (req: Request) => {
     try {
         // Aguarda a resolução da promessa
-        const posts = await getPosts(); 
+        const users = await getUsers(); 
         
-        return NextResponse.json({ message: 'OK', posts }, { status: 200 });
+        return NextResponse.json({ message: 'OK', users }, { status: 200 });
     } catch (err) {
         if (err instanceof Error) {
             return NextResponse.json({ message: 'Error', err: err.message }, { status: 500 });
@@ -18,12 +18,12 @@ export const GET = async (req: Request) => {
 }
 
 export const POST = async (req: Request) => {
-    const { title } = await req.json();
+    const { username, email, password, is_admin } = await req.json();
 
     try {
-        const post = { title };
-        await addPost(post); // Garantir que a função addPost aguarde a inserção do post
-        return NextResponse.json({ message: "Ok", post }, { status: 201 });
+        const user = { username, email, password, is_admin };
+        await addUser(user); // Garantir que a função addPost aguarde a inserção do post
+        return NextResponse.json({ message: "Ok", user }, { status: 201 });
     } catch (err) {
         if (err instanceof Error) {
             return NextResponse.json({ message: 'Error', err: err.message }, { status: 500 });

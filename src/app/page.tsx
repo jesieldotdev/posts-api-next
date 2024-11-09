@@ -4,7 +4,8 @@ export default function Home() {
   return (
 <main>
   <p>My Api</p>
-  <a href='/api/blog'>Blog</a>
+  <a href='/api/posts'>posts</a><br/>
+  <a href='/api/users'>users</a>
 </main>
   )
 }
