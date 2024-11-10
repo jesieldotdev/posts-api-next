@@ -1,5 +1,12 @@
 import supabase  from '../../config/database'; // Importando o cliente Supabase
 
+export interface UserInput{
+  id?: string
+  title: string
+  slug: string
+  author_id: number
+}
+
 // Obter todos os posts
 export const getPosts = async () => {
   const { data, error } = await supabase
@@ -13,11 +20,11 @@ export const getPosts = async () => {
 };
 
 // Adicionar um novo post
-export const addPost = async (post: {  title: string;  }) => {
+export const addPost = async ({title, slug, author_id}:UserInput) => {
   const { data, error } = await supabase
     .from('posts') // Nome da tabela
     .insert([
-      {title: post.title }
+      {title, slug, author_id }
     ]);
 
   if (error) throw new Error(error.message);
@@ -41,10 +48,10 @@ export const deletePost = async (id: string) => {
 };
 
 // Atualizar um post pelo id
-export const updatePost = async (id: string, title: string, desc: string) => {
+export const updatePost = async ({id, title, slug, author_id}:UserInput) => {
   const { data, error } = await supabase
     .from('posts')
-    .update({ title, desc })
+    .update({ title, slug, author_id })
     .eq('id', id); // A condição de atualizar pelo id
 
   if (error) throw new Error(error.message);
@@ -53,7 +60,7 @@ export const updatePost = async (id: string, title: string, desc: string) => {
 };
 
 // Obter um post pelo id
-export const getById = async (id: string) => {
+export const getPostById = async (id: string) => {
   const { data, error } = await supabase
     .from('posts')
     .select('*')
