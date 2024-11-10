@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.46.1",
+    "cors": "^2.8.5",
     "next": "latest",
+    "nextjs-cors": "^2.2.0",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
     "react": "latest",
