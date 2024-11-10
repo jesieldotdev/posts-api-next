@@ -1,7 +1,7 @@
 import supabase  from '../../config/database'; // Importando o cliente Supabase
 
 interface UserInputProps{
-  id?:number
+  id?:number | string
   username: string
   email: string
   password: string
@@ -48,7 +48,7 @@ export const deleteUser = async (id: string) => {
 };
 
 // Atualizar um post pelo id
-export const updateUser = async ({username, password, is_admin, email}:UserInputProps) => {
+export const updateUser = async ({username, password, is_admin, email, id}:UserInputProps) => {
   const { data, error } = await supabase
     .from('users')
     .update({ username, email, password, is_admin })
