@@ -1,17 +1,11 @@
-import supabase  from '../../config/database'; // Importando o cliente Supabase
+import { UserInputProps } from '@/models/models';
+import supabase  from '../../config/database'; 
 
-interface UserInputProps{
-  id?:number | string
-  username: string
-  email: string
-  password: string
-  is_admin: boolean
-}
-// Obter todos os posts
+
 export const getUsers = async () => {
   const { data, error } = await supabase
-    .from('users') // Nome da tabela
-    .select('*');  // Seleciona todos os campos
+    .from('users') 
+    .select('*');  
 
     console.log(data)
 
@@ -19,10 +13,10 @@ export const getUsers = async () => {
   return data;
 };
 
-// Adicionar um novo post
+
 export const addUser = async ({username, password, is_admin, email}:UserInputProps) => {
   const { data, error } = await supabase
-    .from('users') // Nome da tabela
+    .from('users') 
     .insert([
       {username, password, is_admin, email}
     ]);
@@ -31,13 +25,12 @@ export const addUser = async ({username, password, is_admin, email}:UserInputPro
   return data;
 };
 
-// Deletar um post pelo id
+
 export const deleteUser = async (id: string) => {
   const { data, error } = await supabase
     .from('users')
     .delete()
-    .eq('id', id); // A condição de deletar pelo id
-
+    .eq('id', id);
   if (error) throw new Error(error.message);
   if (!data) {
     throw new Error("NO USER FOUND");
@@ -47,19 +40,19 @@ export const deleteUser = async (id: string) => {
   return data;
 };
 
-// Atualizar um post pelo id
+
 export const updateUser = async ({username, password, is_admin, email, id}:UserInputProps) => {
   const { data, error } = await supabase
     .from('users')
     .update({ username, email, password, is_admin })
-    .eq('id', id); // A condição de atualizar pelo id
+    .eq('id', id);
 
   if (error) throw new Error(error.message);
   if (!data) throw new Error("NO USER FOUND");
   return data;
 };
 
-// Obter um post pelo id
+
 export const getUserById = async (id: string) => {
   
   console.log(id);
@@ -67,7 +60,7 @@ export const getUserById = async (id: string) => {
     .from('users')
     .select('*')
     .eq('id', id)
-    .single(); // Para pegar apenas um resultado (usamos .single() para retornar um único item)
+    .single(); 
     
 
   if (error) throw new Error(error.message);

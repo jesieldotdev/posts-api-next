@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 
 export const GET = async (req: Request) => {
     try {
-        // Aguarda a resolução da promessa
+        
         const users = await getUsers(); 
         
         return NextResponse.json({ message: 'OK', users }, { status: 200 });
@@ -22,7 +22,7 @@ export const POST = async (req: Request) => {
 
     try {
         const user = { username, email, password, is_admin };
-        await addUser(user); // Garantir que a função addPost aguarde a inserção do post
+        await addUser(user); 
         return NextResponse.json({ message: "Ok", user }, { status: 201 });
     } catch (err) {
         if (err instanceof Error) {
