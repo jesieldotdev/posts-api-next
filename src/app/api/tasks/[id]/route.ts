@@ -20,9 +20,9 @@ export const GET = async (req: Request) => {
 
 export const PUT = async (req: Request) => {
   try {
-    const { title, description, author } = await req.json();
+    const { title, description, author_id } = await req.json();
     const id = req.url.split("tasks/")[1];
-    updateTask(id, {title, description, author});
+    updateTask(id, {title, description, author_id});
     return NextResponse.json({ message: "OK" }, { status: 200 });
   } catch (err) {
     return NextResponse.json({message: 'Error'}, {status: 500})

@@ -28,10 +28,10 @@ export interface TaskProps{
 export interface TaskInput{
   title: string;
   description: string;
-  start_date: string;
+  start_date?: string;
   status?: "incomplete" | "completed";
-  tags: string[];
-  end_date: string;
+  tags?: string[];
+  end_date?: string;
   author_id: string;
 }
 

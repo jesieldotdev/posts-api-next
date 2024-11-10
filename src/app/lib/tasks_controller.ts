@@ -41,10 +41,10 @@ export const deleteTask = async (id: string) => {
 };
 
 
-export const updateTask = async (id:string | number, {title, description, author}:TaskInput) => {
+export const updateTask = async (id:string | number, {title, description, author_id}:TaskInput) => {
   const { data, error } = await supabase
     .from('tasks')
-    .update({ title, description, author })
+    .update({ title, description, author_id })
     .eq('id', id);
 
   if (error) throw new Error(error.message);
