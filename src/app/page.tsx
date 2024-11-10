@@ -5,7 +5,8 @@ export default function Home() {
 <main>
   <p>My Api</p>
   <a href='/api/posts'>posts</a><br/>
-  <a href='/api/users'>users</a>
+  <a href='/api/users'>users</a><br/>
+  <a href='/api/tasks'>tasks</a>
 </main>
   )
 }
