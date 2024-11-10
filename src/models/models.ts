@@ -13,3 +13,25 @@ export interface UserInputProps{
   password: string
   is_admin: boolean
 }
+
+export interface TaskProps{
+  title: string;
+  description: string;
+  start_date: string;
+  status?: "incomplete" | "completed";
+  id: number | string;
+  tags: string[];
+  end_date: string;
+  author_id: string;
+}
+
+export interface TaskInput{
+  title: string;
+  description: string;
+  start_date?: string;
+  status?: "incomplete" | "completed";
+  tags?: string[];
+  end_date?: string;
+  author_id: string;
+}
+
