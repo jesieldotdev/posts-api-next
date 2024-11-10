@@ -22,7 +22,7 @@ export const PUT = async (req: Request) => {
   try {
     const { username, password, email, is_admin } = await req.json();
     const id = req.url.split("users/")[1];
-    updateUser(id, username, password, is_admin);
+    updateUser({id, username,email, password, is_admin});
     return NextResponse.json({ message: "OK" }, { status: 200 });
   } catch (err) {
     return NextResponse.json({message: 'Error'}, {status: 500})
@@ -35,7 +35,7 @@ export const DELETE = async (req: Request) => {
 
     const user = getUserById(id);
 
-    if (!post) {
+    if (!user) {
       return NextResponse.json({ message: "Error" }, { status: 404 });
     }
     deleteUser(id);

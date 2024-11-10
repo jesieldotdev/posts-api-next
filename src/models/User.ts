@@ -4,18 +4,18 @@ interface User {
   id: string;
   username: string;
   password: string;
-  createsAt: Date
-  is_admin: boolean; // O Supabase geralmente lida com datas como strings em formato ISO
+  createsAt: Date;
+  is_admin: boolean;
 }
 
-interface UserInputProps{
-  username: string
-  password: string
-  is_admin: boolean
+interface UserInputProps {
+  username: string;
+  password: string;
+  is_admin: boolean;
 }
 
 class UserModel {
-  // Função para obter todos os posts
+  // Função para obter todos os usuários
   static async getAllUsers(): Promise<User[]> {
     const { data, error } = await supabase
       .from("users")
@@ -28,8 +28,8 @@ class UserModel {
     return data as User[];
   }
 
-  // Função para criar um novo post
-  static async createUser(UserInputProps): Promise<User> {
+  // Função para criar um novo usuário
+  static async createUser({ username, password, is_admin }: UserInputProps): Promise<User> {
     const { data, error } = await supabase
       .from("users")
       .insert([{ username, password, is_admin }])
@@ -42,7 +42,7 @@ class UserModel {
     return data as User;
   }
 
-  // Função para obter um post por ID
+  // Função para obter um usuário por ID
   static async getUserById(userId: string): Promise<User | null> {
     const { data, error } = await supabase
       .from("users")
@@ -57,11 +57,11 @@ class UserModel {
     return data as User | null;
   }
 
-  // Função para atualizar um post
-  static async updateUser(UserInputProps): Promise<User> {
+  // Função para atualizar um usuário
+  static async updateUser(userId: string, { username, password, is_admin }: UserInputProps): Promise<User> {
     const { data, error } = await supabase
       .from("users")
-      .update({ username, password, is_admin})
+      .update({ username, password, is_admin })
       .eq("id", userId)
       .single();
 
@@ -72,7 +72,7 @@ class UserModel {
     return data as User;
   }
 
-  // Função para deletar um post
+  // Função para deletar um usuário
   static async deleteUser(userId: string): Promise<void> {
     const { error } = await supabase
       .from("users")
