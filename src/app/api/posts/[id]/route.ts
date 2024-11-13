@@ -5,7 +5,6 @@ export const GET = async (req: Request) => {
   try {
     const id = req.url.split("posts/")[1];
     const post = await getPostById(id);
-    console.log(post);
     if (!post) {
       return NextResponse.json({ message: "Error" }, { status: 404 });
     }

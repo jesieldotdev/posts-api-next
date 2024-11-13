@@ -7,7 +7,7 @@ export const getTasks = async () => {
     .from('tasks') 
     .select('*');  
 
-    console.log(data)
+
 
   if (error) throw new Error(error.message);
   return data;
@@ -41,21 +41,38 @@ export const deleteTask = async (id: string) => {
 };
 
 
-export const updateTask = async (id:string | number, {title, description, author_id}:TaskInput) => {
-  const { data, error } = await supabase
-    .from('tasks')
-    .update({ title, description, author_id })
-    .eq('id', id);
-
-  if (error) throw new Error(error.message);
-  if (!data) throw new Error("NO TASK FOUND");
-  return data;
-};
+export const updateTask = async (id: string | number, updatedData: Partial<TaskInput>) => {
+    console.log('Updating task with ID: ', id);
+  
+    // Confirme se a tarefa existe antes de tentar atualizar
+    const { data: task, error: taskError } = await supabase
+      .from('tasks')
+      .select('*')
+      .eq('id', id)
+      .single();
+  
+    if (taskError) throw new Error(`Error fetching task: ${taskError.message}`);
+    if (!task) throw new Error(`No task found with the given id: ${id}`);
+  
+    // Atualiza apenas os campos passados na requisição
+    const { data, error } = await supabase
+      .from('tasks')
+      .update(updatedData)
+      .eq('id', Number(id)); // Garantir que o id seja numérico
+  
+    if (error) throw new Error(`Error updating task: ${error.message}`);
+  
+    console.log('Updated task: ', data); // Verifique a resposta
+  
+    return data;
+  };
+  
+  
 
 
 export const getTaskById = async (id: string) => {
-  
-  console.log(id);
+
+
   const { data, error } = await supabase
     .from('tasks')
     .select('*')
