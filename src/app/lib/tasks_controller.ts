@@ -75,30 +75,37 @@ export const updateTaskStatus = async (id: string | number, status: 'incomplete'
     throw new Error('Invalid status value');
   }
 
-  // Verifica se o ID é um número válido
-  if (typeof id !== 'number' || isNaN(Number(id))) {
-    throw new Error('Invalid ID format');
+  // Atualiza a coluna status da tarefa com o ID fornecido
+  const { data, error } = await supabase
+    .from('tasks')
+    .update({ status })
+    .eq('id', id);
+
+  // Verifica se houve erro na atualização
+  if (error) {
+    console.error('Error updating task status: ', error.message);
+    throw new Error(`Error updating task status: ${error.message}`);
   }
 
-  try {
-    // Atualiza a coluna status da tarefa com o ID fornecido
-    const { data, error } = await supabase
-      .from('tasks')
-      .update({ status })
-      .eq('id', id); // Garante que o id seja numérico
+  // Após a atualização, consulta a tarefa atualizada
+  const { data: updatedData, error: fetchError } = await supabase
+    .from('tasks')
+    .select('*')
+    .eq('id', id)
+    .single();  // Garante que apenas um item seja retornado
 
-    if (error) {
-      console.error('Error updating task status: ', error.message);
-      throw new Error(`Error updating task status: ${error.message}`);
-    }
-
-    console.log('Updated task status: ', data); // Verifica a resposta
-    return data;
-  } catch (err) {
-    console.error('Unexpected error: ', err);
-    throw new Error('An unexpected error occurred while updating task status');
+  // Verifica se houve erro ao buscar os dados atualizados
+  if (fetchError) {
+    console.error('Error fetching updated task: ', fetchError.message);
+    throw new Error(`Error fetching updated task: ${fetchError.message}`);
   }
+
+  console.log('Updated task status: ', updatedData); 
+
+  // Retorna os dados da tarefa atualizada
+  return updatedData;
 };
+
 
 
   

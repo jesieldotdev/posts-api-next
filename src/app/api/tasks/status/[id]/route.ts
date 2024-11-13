@@ -1,4 +1,4 @@
-import { updateTaskStatus } from "@/app/lib/tasks_controller";
+import { getTaskById, updateTaskStatus } from "@/app/lib/tasks_controller";
 import { NextResponse } from "next/server";
 
 export const PATCH = async (req: Request, { params }: { params: { id: string } }) => {
@@ -25,3 +25,21 @@ export const PATCH = async (req: Request, { params }: { params: { id: string } }
         }
     }
 };
+
+
+export const GET = async (req: Request) => {
+    try {
+      const id = req.url.split("tasks/status")[1]
+      const task = await getTaskById(id)
+      
+      
+      if (!task) {
+        return NextResponse.json({ message: "Error" }, { status: 404 });
+      }
+    
+  
+      return NextResponse.json({ message: "OK", task}, { status: 200 });
+    } catch (err) {
+      NextResponse.json({ message: "Error", err }, { status: 500 });
+    }
+  };
