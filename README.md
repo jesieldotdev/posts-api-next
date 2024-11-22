@@ -1,6 +1,6 @@
 ## Blog API
 #### Methods: GET, POST, PUT, DELETE
-<code>https://posts-api-next.vercel.app/api/blog</code>
+<code>https://posts-api-next.vercel.app/api/posts</code>
 
 #### Example
 <code>{
