@@ -1,5 +1,5 @@
 import { deleteTask, getTaskById, updateTask } from "@/app/lib/tasks_controller";
-import { TaskInput } from "@/models/models";
+import { TaskInput } from "@/@types/models";
 import { NextResponse } from "next/server";
 
 export const GET = async (req: Request) => {

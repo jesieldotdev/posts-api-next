@@ -12,6 +12,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.46.1",
     "cors": "^2.8.5",
+    "mongodb": "^6.14.0",
     "next": "latest",
     "nextjs-cors": "^2.2.0",
     "pg": "^8.13.1",

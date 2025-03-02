@@ -1,4 +1,4 @@
-import { UserInputProps } from '@/models/models';
+import { UserInputProps } from '@/@types/models';
 import supabase  from '../../config/database'; 
 
 

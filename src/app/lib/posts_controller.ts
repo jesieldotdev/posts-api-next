@@ -1,4 +1,4 @@
-import { UserInput } from '@/models/models';
+import { UserInput } from '@/@types/models';
 import supabase  from '../../config/database'; 
 
 
